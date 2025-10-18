@@ -6,7 +6,7 @@
     <title>Ansar & Hussaina | A Cosmic Love Story</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:wght@300;400;600&family=Poppins:wght@200;300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:wght@300;400;600&family=Poppins:wght@200;300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
@@ -20,6 +20,7 @@
             --font-heading: 'Cinzel Decorative', serif;
             --font-elegant: 'Cormorant Garamond', serif;
             --font-body: 'Poppins', sans-serif;
+            --font-handwritten: 'Dancing Script', cursive;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -36,829 +37,264 @@
         }
 
         #cosmic-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw;
-            height: 100vh;
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: -1;
             transition: transform 2.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        body.hyperdrive #cosmic-canvas {
-            transform: scale(3.5);
-        }
+        body.hyperdrive #cosmic-canvas { transform: scale(3.5); }
 
         #intro-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw;
-            height: 100vh;
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
             z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
             transition: opacity 1.5s ease-out;
         }
         
-        .intro-content {
-            text-align: center;
-            position: relative;
-            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s ease;
-        }
+        .intro-content { text-align: center; position: relative; transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s ease; }
+        body.hyperdrive .intro-content { transform: scale(0.1); opacity: 0; }
+        .cosmic-heart { font-size: clamp(60px, 15vw, 80px); margin-bottom: 30px; animation: heartPulse 2s ease-in-out infinite, colorShift 4s ease-in-out infinite; filter: drop-shadow(0 0 20px var(--color-nebula-pink)); }
+        @keyframes heartPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        @keyframes colorShift { 0%, 100% { filter: drop-shadow(0 0 20px var(--color-nebula-pink)); } 50% { filter: drop-shadow(0 0 30px var(--color-cosmic-gold)); } }
+
+        .intro-names { font-family: var(--font-heading); font-size: clamp(2rem, 10vw, 4rem); font-weight: 900; background: linear-gradient(135deg, #FFD700 0%, #FFA500 25%, #FF69B4 50%, #8A2BE2 75%, #4169E1 100%); background-size: 300% 300%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: gradientFlow 8s ease infinite; letter-spacing: 3px; margin-bottom: 20px; text-shadow: 0 0 30px rgba(255, 215, 0, 0.5); }
+        @keyframes gradientFlow { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+        .intro-subtitle { font-family: var(--font-elegant); font-size: clamp(1rem, 4vw, 1.5rem); color: var(--color-stardust); font-style: italic; margin-bottom: 40px; }
+        .enter-btn { padding: 16px 40px; font-family: var(--font-body); font-size: 1.1rem; font-weight: 600; color: var(--color-deep-space); background: linear-gradient(135deg, var(--color-cosmic-gold), var(--color-nebula-pink)); border: none; border-radius: 50px; transition: all 0.4s ease; box-shadow: 0 0 30px rgba(255, 215, 0, 0.5); position: relative; animation: buttonGlow 2s ease-in-out infinite; }
+        @keyframes buttonGlow { 0%, 100% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.5); transform: scale(1); } 50% { box-shadow: 0 0 50px rgba(255, 105, 180, 0.7); transform: scale(1.05); } }
         
-        body.hyperdrive .intro-content {
-            transform: scale(0.1);
-            opacity: 0;
-        }
+        #main-container { opacity: 0; transition: opacity 2s ease-in 1.5s; pointer-events: none; position: relative; z-index: 1; }
+        body.hyperdrive-engaged #main-container { opacity: 1; pointer-events: all; }
 
-        .cosmic-heart {
-            font-size: clamp(60px, 15vw, 80px);
-            margin-bottom: 30px;
-            animation: heartPulse 2s ease-in-out infinite, colorShift 4s ease-in-out infinite;
-            filter: drop-shadow(0 0 20px var(--color-nebula-pink));
-        }
-
-        @keyframes heartPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-
-        @keyframes colorShift {
-            0%, 100% { filter: drop-shadow(0 0 20px var(--color-nebula-pink)); }
-            50% { filter: drop-shadow(0 0 30px var(--color-cosmic-gold)); }
-        }
-
-        .intro-names {
-            font-family: var(--font-heading);
-            font-size: clamp(2rem, 10vw, 4rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 25%, #FF69B4 50%, #8A2BE2 75%, #4169E1 100%);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientFlow 8s ease infinite;
-            letter-spacing: 3px;
-            margin-bottom: 20px;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-        }
-
-        @keyframes gradientFlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .intro-subtitle {
-            font-family: var(--font-elegant);
-            font-size: clamp(1rem, 4vw, 1.5rem);
-            color: var(--color-stardust);
-            font-style: italic;
-            margin-bottom: 40px;
-        }
+        .hero-section { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; position: relative; }
+        .hero-title { font-family: var(--font-heading); font-size: clamp(2.5rem, 12vw, 5rem); font-weight: 900; background: linear-gradient(135deg, var(--color-cosmic-gold), var(--color-nebula-pink), var(--color-galaxy-blue)); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: gradientFlow 6s ease infinite; margin-bottom: 20px; line-height: 1.2; }
+        .hero-subtitle { font-family: var(--font-elegant); font-size: clamp(1.2rem, 5vw, 2rem); color: var(--color-stardust); font-weight: 300; margin-bottom: 40px; }
+        .love-quote { max-width: 600px; font-family: var(--font-elegant); font-size: clamp(1rem, 4vw, 1.2rem); line-height: 1.8; color: var(--color-star-white); margin: 30px auto; padding: 30px; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); font-style: italic; }
         
-        .enter-btn {
-            padding: 16px 40px;
-            font-family: var(--font-body);
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--color-deep-space);
-            background: linear-gradient(135deg, var(--color-cosmic-gold), var(--color-nebula-pink));
-            border: none;
-            border-radius: 50px;
-            transition: all 0.4s ease;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-            position: relative;
-            animation: buttonGlow 2s ease-in-out infinite;
-        }
+        .section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+        .section-title { font-family: var(--font-heading); font-size: clamp(2rem, 8vw, 3.5rem); text-align: center; background: linear-gradient(135deg, var(--color-cosmic-gold), var(--color-nebula-pink)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 50px; }
+        .countdown-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; max-width: 700px; margin: 0 auto; }
+        .countdown-box { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); padding: 20px 10px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); position: relative; transition: all 0.3s ease; }
+        .countdown-number { font-family: var(--font-heading); font-size: clamp(2rem, 10vw, 3.5rem); font-weight: 900; background: linear-gradient(135deg, var(--color-cosmic-gold), var(--color-nebula-pink)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: block; margin-bottom: 5px; text-align: center; }
+        .countdown-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--color-stardust); font-weight: 300; text-align: center; display: block; }
 
-        @keyframes buttonGlow {
-            0%, 100% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.5); transform: scale(1); }
-            50% { box-shadow: 0 0 50px rgba(255, 105, 180, 0.7); transform: scale(1.05); }
-        }
-        
-        #main-container {
-            opacity: 0;
-            transition: opacity 2s ease-in 1.5s;
-            pointer-events: none;
-        }
+        .vertical-timeline { position: relative; max-width: 800px; margin: 0 auto; padding: 30px 0; }
+        .vertical-timeline::before { content: ''; position: absolute; top: 0; left: 20px; height: 100%; width: 4px; background: linear-gradient(to bottom, var(--color-cosmic-gold), var(--color-nebula-pink), var(--color-galaxy-blue)); border-radius: 2px; box-shadow: 0 0 15px var(--color-nebula-pink); }
+        .timeline-event { position: relative; padding-left: 60px; margin-bottom: 50px; }
+        .timeline-event:last-child { margin-bottom: 0; }
+        .timeline-point { position: absolute; top: 5px; left: 10px; width: 24px; height: 24px; background: var(--color-deep-space); border: 4px solid var(--color-cosmic-gold); border-radius: 50%; z-index: 1; }
+        .timeline-date { font-family: var(--font-heading); font-size: 1.1rem; color: var(--color-cosmic-gold); font-weight: 700; margin-bottom: 8px; }
+        .timeline-title { font-family: var(--font-elegant); font-size: 1.6rem; font-weight: 600; color: var(--color-star-white); margin-bottom: 10px; }
+        .timeline-text { font-family: var(--font-elegant); font-size: 1.1rem; line-height: 1.7; color: var(--color-stardust); }
 
-        body.hyperdrive-engaged #main-container {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .hero-section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-            position: relative;
-        }
-
-        .hero-title {
-            font-family: var(--font-heading);
-            font-size: clamp(2.5rem, 12vw, 5rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--color-cosmic-gold), var(--color-nebula-pink), var(--color-galaxy-blue));
-            background-size: 200% 200%;
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-            animation: gradientFlow 6s ease infinite;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .hero-subtitle {
-            font-family: var(--font-elegant);
-            font-size: clamp(1.2rem, 5vw, 2rem);
-            color: var(--color-stardust);
-            font-weight: 300;
-            margin-bottom: 40px;
-        }
-
-        .love-quote {
-            max-width: 600px;
-            font-family: var(--font-elegant);
-            font-size: clamp(1rem, 4vw, 1.2rem);
-            line-height: 1.8;
-            color: var(--color-star-white);
-            margin: 30px auto;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-style: italic;
-        }
-        
-        .section {
-            padding: 80px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-family: var(--font-heading);
-            font-size: clamp(2rem, 8vw, 3.5rem);
-            text-align: center;
-            background: linear-gradient(135deg, var(--color-cosmic-gold), var(--color-nebula-pink));
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 50px;
-        }
-
-        .countdown-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .countdown-box {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            padding: 20px 10px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        
-        .countdown-number {
-            font-family: var(--font-heading);
-            font-size: clamp(2rem, 10vw, 3.5rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--color-cosmic-gold), var(--color-nebula-pink));
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-            display: block;
-            margin-bottom: 5px;
-            text-align: center;
-        }
-
-        .countdown-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--color-stardust);
-            font-weight: 300;
-            text-align: center;
-            display: block;
-        }
-
-        /* Vertical Mobile-First Timeline */
-        .vertical-timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 30px 0;
-        }
-        .vertical-timeline::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 20px;
-            height: 100%;
-            width: 4px;
-            background: linear-gradient(to bottom, var(--color-cosmic-gold), var(--color-nebula-pink), var(--color-galaxy-blue));
-            border-radius: 2px;
-            box-shadow: 0 0 15px var(--color-nebula-pink);
-        }
-
-        .timeline-event {
-            position: relative;
-            padding-left: 60px;
-            margin-bottom: 50px;
-        }
-        .timeline-event:last-child {
-            margin-bottom: 0;
-        }
-
-        .timeline-point {
-            position: absolute;
-            top: 5px;
-            left: 10px;
-            width: 24px;
-            height: 24px;
-            background: var(--color-deep-space);
-            border: 4px solid var(--color-cosmic-gold);
-            border-radius: 50%;
-            z-index: 1;
-        }
-
-        .timeline-date {
-            font-family: var(--font-heading);
-            font-size: 1.1rem;
-            color: var(--color-cosmic-gold);
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .timeline-title {
-            font-family: var(--font-elegant);
-            font-size: 1.6rem;
-            font-weight: 600;
-            color: var(--color-star-white);
-            margin-bottom: 10px;
-        }
-
-        .timeline-text {
-            font-family: var(--font-elegant);
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: var(--color-stardust);
-        }
-
-        .details-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .detail-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .detail-card:active {
-            transform: scale(0.98);
-        }
-
-        .detail-icon {
-            font-size: 2.5rem;
-            color: var(--color-cosmic-gold);
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 15px var(--color-cosmic-gold));
-        }
+        .details-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 30px; }
+        .detail-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); padding: 30px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .detail-card:active { transform: scale(0.98); }
+        .detail-icon { font-size: 2.5rem; color: var(--color-cosmic-gold); margin-bottom: 15px; filter: drop-shadow(0 0 15px var(--color-cosmic-gold)); }
         .detail-title { font-family: var(--font-elegant); font-size: 1.3rem; color: var(--color-nebula-pink); margin-bottom: 10px; }
         .detail-text { color: var(--color-stardust); font-size: 1rem; line-height: 1.6; }
 
-        .cosmic-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 15px 30px;
-            font-family: var(--font-body);
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--color-deep-space);
-            background: linear-gradient(135deg, var(--color-cosmic-gold), var(--color-nebula-pink));
-            border: none;
-            border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
-            position: relative;
-            margin: 10px 0;
-            text-decoration: none;
-            width: 100%;
-            max-width: 350px;
-            transition: transform 0.2s ease;
-        }
-        .cosmic-btn:active {
-            transform: scale(0.97);
-        }
+        .cosmic-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 30px; font-family: var(--font-body); font-size: 1rem; font-weight: 600; color: var(--color-deep-space); background: linear-gradient(135deg, var(--color-cosmic-gold), var(--color-nebula-pink)); border: none; border-radius: 50px; box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3); position: relative; margin: 10px 0; text-decoration: none; width: 100%; max-width: 350px; transition: transform 0.2s ease; cursor: pointer; }
+        .cosmic-btn:active { transform: scale(0.97); }
         .btn-container { text-align: center; margin-top: 30px; display: flex; flex-direction: column; align-items: center; }
         
-        .wish-wall-container { max-width: 800px; margin: 0 auto; text-align: center; }
-        .wish-input {
-            width: 100%;
-            padding: 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            color: var(--color-star-white);
-            font-family: var(--font-elegant);
-            font-size: 1.1rem;
-            text-align: center;
-            margin-bottom: 20px;
+        #floating-star-letter {
+            position: fixed;
+            bottom: 30px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            z-index: 1000;
+            cursor: pointer;
+            animation: star-float 6s ease-in-out infinite, star-rotate 20s linear infinite;
         }
 
-        #floating-moon {
-            position: fixed;
-            bottom: 80px;
-            right: 10px;
-            width: 50px;
-            height: 50px;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: float 4s ease-in-out infinite;
+        .star-body {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, #ffffff 0%, #ffd700 40%, #ffac33 100%);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: star-pulse 2.5s ease-in-out infinite;
+            box-shadow: 0 0 15px #ffd700, 0 0 30px #ffd700, 0 0 50px #ffac33, 0 0 80px var(--color-nebula-pink);
         }
-        .moon-body {
-            width: 100%; height: 100%;
-            background: radial-gradient(circle, #f0f0f0, #c0c0c0);
-            border-radius: 50%;
-            box-shadow: 0 0 15px #ffffff, 0 0 25px #ffffffaa, inset -8px -8px 15px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-        }
-        .moon-body:active { transform: scale(0.9); }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+
+        #floating-star-letter:active .star-body { transform: scale(0.9); }
+        @keyframes star-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes star-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes star-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; } }
 
         #letter-modal {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
             background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
-            z-index: 10000; display: flex; align-items: center; justify-content: center;
+            z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
             opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
         }
         #letter-modal.active { opacity: 1; pointer-events: all; }
-        .letter-container { perspective: 1500px; width: 90%; max-width: 600px; }
-        .letter-content {
-            position: relative; width: 100%; padding-top: 141.4%;
-            transform-style: preserve-3d; transform: rotateX(70deg) scale(0.8); opacity: 0;
-            transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.5s;
-        }
-        #letter-modal.active .letter-content { transform: rotateX(0deg) scale(1); opacity: 1; }
-        .letter-page {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #fdf5e6; color: #3a2e20;
-            padding: 25px; font-family: var(--font-elegant);
-            font-size: clamp(0.9rem, 4vw, 1.1rem); line-height: 1.7;
-            border: 1px solid #e0d8c6; overflow: auto;
-        }
-        .letter-signature { margin-top: 20px; font-family: var(--font-heading); font-size: 1.2rem; color: var(--color-nebula-purple); }
-        
-        .floating-action-bar {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1001;
-            display: flex;
-            gap: 15px;
-            background: rgba(10, 1, 24, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 10px 20px;
-            border-radius: 50px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        .fab-button {
-            width: 45px; height: 45px;
-            border-radius: 50%;
-            background: transparent;
-            border: 1px solid var(--color-cosmic-gold);
-            color: var(--color-cosmic-gold);
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-        .fab-button.active {
-            background: var(--color-cosmic-gold);
-            color: var(--color-deep-space);
-            box-shadow: 0 0 15px var(--color-cosmic-gold);
-        }
-        
-        .particle {
-            position: fixed;
-            z-index: 10002;
-            pointer-events: none;
-            border-radius: 50%;
+
+        .envelope-container {
+            perspective: 2000px;
+            width: 90%; max-width: 500px;
             opacity: 0;
+            transform: scale(0.8) rotateY(-20deg);
+            transition: opacity 0.5s ease, transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        #letter-modal.active .envelope-container { opacity: 1; transform: scale(1) rotateY(0deg); }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            padding-bottom: 75%;
+            transform-style: preserve-3d;
         }
 
+        .envelope-back {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: #e0d8c6;
+            border-radius: 8px;
+        }
+
+        .envelope-flap {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 55%;
+            background-color: #e9e2d3;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform-origin: top center;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s;
+            z-index: 3;
+        }
+        #letter-modal.active .envelope-flap { transform: rotateX(180deg); }
+        
+        .letter-page {
+            position: absolute;
+            bottom: 0; left: 5%;
+            width: 90%; height: 95%;
+            background-color: #fdf5e6;
+            color: #3a2e20;
+            padding: 25px;
+            font-family: var(--font-handwritten);
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            line-height: 1.8;
+            overflow: hidden;
+            border: 1px solid #d4cbb8;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transform: translateY(0);
+            transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1) 1s;
+            z-index: 2;
+        }
+        #letter-modal.active .letter-page { transform: translateY(-80%); }
+
+        .letter-signature {
+            margin-top: 20px;
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--color-nebula-purple);
+        }
+        
+        .floating-action-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1001; display: flex; gap: 15px; background: rgba(10, 1, 24, 0.8); backdrop-filter: blur(10px); padding: 10px 20px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2); }
+        .fab-button { width: 45px; height: 45px; border-radius: 50%; background: transparent; border: 1px solid var(--color-cosmic-gold); color: var(--color-cosmic-gold); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+        .fab-button.active { background: var(--color-cosmic-gold); color: var(--color-deep-space); box-shadow: 0 0 15px var(--color-cosmic-gold); }
+
+        /* --- FIX FOR MOBILE VIEW --- */
+        @media (max-width: 768px) {
+            #floating-star-letter {
+                bottom: 100px; /* Moves the star up, above the action bar */
+                right: 15px;
+                width: 50px;   /* Slightly smaller for mobile */
+                height: 50px;
+            }
+        }
     </style>
 </head>
 <body>
     <canvas id="cosmic-canvas"></canvas>
-
-    <div id="intro-overlay">
-        <div class="intro-content">
-            <div class="cosmic-heart">💜</div>
-            <div class="intro-names">Ansar & Hussaina</div>
-            <div class="intro-subtitle">Written in the Stars</div>
-            <button class="enter-btn" id="enterBtn">Enter Our Universe</button>
-        </div>
-    </div>
+    <div id="intro-overlay"><div class="intro-content"><div class="cosmic-heart">💜</div><div class="intro-names">Ansar & Hussaina</div><div class="intro-subtitle">Written in the Stars</div><button class="enter-btn" id="enterBtn">Enter Our Universe</button></div></div>
 
     <main id="main-container">
-        <header class="hero-section" id="hero">
-            <h1 class="hero-title" id="heroTitle">Ansar & Hussaina</h1>
-            <p class="hero-subtitle">A Cosmic Love Story</p>
-            <div class="love-quote">
-                "In the vast expanse of the universe, two souls found each other. Among billions of stars, our love shines the brightest."
-            </div>
-        </header>
-
-        <section class="section">
-            <h2 class="section-title">Our Celestial Union Begins In</h2>
-            <div class="countdown-container">
-                <div class="countdown-box"><span class="countdown-number" id="days">00</span><span class="countdown-label">Days</span></div>
-                <div class="countdown-box"><span class="countdown-number" id="hours">00</span><span class="countdown-label">Hours</span></div>
-                <div class="countdown-box"><span class="countdown-number" id="minutes">00</span><span class="countdown-label">Minutes</span></div>
-                <div class="countdown-box"><span class="countdown-number" id="seconds">00</span><span class="countdown-label">Seconds</span></div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">Our Cosmic Journey</h2>
-            <div class="vertical-timeline">
-                <div class="timeline-event">
-                    <div class="timeline-point"></div>
-                    <div class="timeline-date">A Few Moons Ago</div>
-                    <h3 class="timeline-title">A Fated Glance</h3>
-                    <p class="timeline-text">Our universe began not with a supernova, but with a simple photo. A connection sparked by family, waiting for the right moment to ignite.</p>
-                </div>
-                <div class="timeline-event">
-                    <div class="timeline-point"></div>
-                    <div class="timeline-date">The First Orbit</div>
-                    <h3 class="timeline-title">A Voice Across the Stars</h3>
-                    <p class="timeline-text">The first conversation. It was official, a little awkward, and honestly, he did most of the talking! But in those words, a new galaxy of possibilities began to form.</p>
-                </div>
-                <div class="timeline-event">
-                    <div class="timeline-point"></div>
-                    <div class="timeline-date">Gravitational Pull</div>
-                    <h3 class="timeline-title">Discovering Our Constellation</h3>
-                    <p class="timeline-text">With every shared moment, we found that our separate paths were really just one, leading to this beautiful collision of hearts. A true arranged love story!</p>
-                </div>
-                 <div class="timeline-event">
-                    <div class="timeline-point"></div>
-                    <div class="timeline-date">December 27, 2025</div>
-                    <h3 class="timeline-title">Our Universe Aligns</h3>
-                    <p class="timeline-text">And now, we invite you to witness as our two galaxies merge into one. The beginning of our forever, written in the stars.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">Celebration Details</h2>
-            <div class="details-grid">
-                <div class="detail-card">
-                    <i class="fas fa-calendar-star detail-icon"></i>
-                    <h3 class="detail-title">Date</h3>
-                    <p class="detail-text">Saturday<br>27th December 2025</p>
-                </div>
-                <div class="detail-card">
-                    <i class="fas fa-clock detail-icon"></i>
-                    <h3 class="detail-title">Time</h3>
-                    <p class="detail-text">11:00 AM Onwards<br>Lunch at Noon</p>
-                </div>
-                <div class="detail-card">
-                    <i class="fas fa-map-marked-alt detail-icon"></i>
-                    <h3 class="detail-title">Venue</h3>
-                    <p class="detail-text">R.A.R Mahal<br>Tiruchirappalli, Tamil Nadu</p>
-                </div>
-            </div>
-            <div class="btn-container">
-                <button class="cosmic-btn" id="addCalendarBtn"><i class="fas fa-calendar-plus"></i> Add to Calendar</button>
-                <a href="https://www.google.com/maps/search/?api=1&query=R.A.R+Mahal,Tiruchirappalli" target="_blank" class="cosmic-btn"><i class="fas fa-map-location-dot"></i> Get Directions</a>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">Celestial Wishes</h2>
-             <div class="wish-wall-container">
-                <p style="font-family: var(--font-elegant); font-size: 1.2rem; margin-bottom: 30px; line-height: 1.8;">
-                    Leave a message for us! Your wish will become a star in our virtual sky, forever shining in our cosmic memory.
-                </p>
-                <input type="text" id="wishInput" class="wish-input" placeholder="Your Name" maxlength="20">
-                <textarea id="wishMessage" class="wish-input" placeholder="Write your wish..." maxlength="100" rows="3" style="resize:none;"></textarea>
-                <button class="cosmic-btn" id="submitWishBtn"><i class="fas fa-star"></i> Dedicate a Star</button>
-            </div>
-        </section>
-
-        <footer style="text-align: center; padding: 60px 20px 120px; font-family: var(--font-elegant);">
-            <p style="font-size: 1.3rem; color: var(--color-cosmic-gold); margin-bottom: 15px;">With all our love,</p>
-            <p style="font-size: 1.5rem; color: var(--color-nebula-pink);">Ansar & Hussaina 💜</p>
-            <p style="font-size: 0.9rem; color: var(--color-stardust); margin-top: 30px;">Thank you for being part of our universe</p>
-        </footer>
+        <header class="hero-section" id="hero"><h1 class="hero-title" id="heroTitle">Ansar & Hussaina</h1><p class="hero-subtitle">A Cosmic Love Story</p><div class="love-quote">"In the vast expanse of the universe, two souls found each other. Among billions of stars, our love shines the brightest."</div></header>
+        <section class="section"><h2 class="section-title">Our Celestial Union Begins In</h2><div class="countdown-container"><div class="countdown-box"><span class="countdown-number" id="days">00</span><span class="countdown-label">Days</span></div><div class="countdown-box"><span class="countdown-number" id="hours">00</span><span class="countdown-label">Hours</span></div><div class="countdown-box"><span class="countdown-number" id="minutes">00</span><span class="countdown-label">Minutes</span></div><div class="countdown-box"><span class="countdown-number" id="seconds">00</span><span class="countdown-label">Seconds</span></div></div></section>
+        <section class="section"><h2 class="section-title">Our Cosmic Journey</h2><div class="vertical-timeline"><div class="timeline-event"><div class="timeline-point"></div><div class="timeline-date">A Few Moons Ago</div><h3 class="timeline-title">A Fated Glance</h3><p class="timeline-text">Our universe began not with a supernova, but with a simple photo. A connection sparked by family, waiting for the right moment to ignite.</p></div><div class="timeline-event"><div class="timeline-point"></div><div class="timeline-date">The First Orbit</div><h3 class="timeline-title">A Voice Across the Stars</h3><p class="timeline-text">The first conversation. It was official, a little awkward, and honestly, he did most of the talking! But in those words, a new galaxy of possibilities began to form.</p></div><div class="timeline-event"><div class="timeline-point"></div><div class="timeline-date">Gravitational Pull</div><h3 class="timeline-title">Discovering Our Constellation</h3><p class="timeline-text">With every shared moment, we found that our separate paths were really just one, leading to this beautiful collision of hearts. A true arranged love story!</p></div><div class="timeline-event"><div class="timeline-point"></div><div class="timeline-date">December 27, 2025</div><h3 class="timeline-title">Our Universe Aligns</h3><p class="timeline-text">And now, we invite you to witness as our two galaxies merge into one. The beginning of our forever, written in the stars.</p></div></div></section>
+        <section class="section"><h2 class="section-title">Celebration Details</h2><div class="details-grid"><div class="detail-card"><i class="fas fa-calendar-star detail-icon"></i><h3 class="detail-title">Date</h3><p class="detail-text">Saturday<br>27th December 2025</p></div><div class="detail-card"><i class="fas fa-clock detail-icon"></i><h3 class="detail-title">Time</h3><p class="detail-text">11:00 AM Onwards<br>Lunch at Noon</p></div><div class="detail-card"><i class="fas fa-map-marked-alt detail-icon"></i><h3 class="detail-title">Venue</h3><p class="detail-text">R.A.R Mahal<br>Tiruchirappalli, Tamil Nadu</p></div></div><div class="btn-container"><button class="cosmic-btn" id="addCalendarBtn"><i class="fas fa-calendar-plus"></i> Add to Calendar</button><a href="https://www.google.com/maps/search/?api=1&query=R.A.R+Mahal,Tiruchirappalli" target="_blank" class="cosmic-btn"><i class="fas fa-map-location-dot"></i> Get Directions</a></div></section>
+        <footer style="text-align: center; padding: 60px 20px 120px; font-family: var(--font-elegant);"><p style="font-size: 1.3rem; color: var(--color-cosmic-gold); margin-bottom: 15px;">With all our love,</p><p style="font-size: 1.5rem; color: var(--color-nebula-pink);">Ansar & Hussaina 💜</p><p style="font-size: 0.9rem; color: var(--color-stardust); margin-top: 30px;">Thank you for being part of our universe</p></footer>
     </main>
     
-    <div id="floating-moon">
-        <div class="moon-body" id="moon-body"></div>
-    </div>
-    
+    <div id="floating-star-letter"><div class="star-body"></div></div>
     <div id="letter-modal">
-        <div class="letter-container">
-            <div class="letter-content">
+        <div class="envelope-container">
+            <div class="envelope">
                 <div class="letter-page">
                     Dearest Friend,<br><br>
-                    Just as stars find their way to form constellations, we found our way to each other. Our story might seem like it was arranged by families, but we feel it was truly arranged by the cosmos.
-                    <br><br>
-                    We are overjoyed to begin this new chapter and would be honored if you would join us to celebrate our union. Your presence is the most precious gift we could ask for as we launch into our new life together.
-                    <br><br>
-                    <div class="letter-signature">
-                        With love,<br>
-                        Ansar & Hussaina
-                    </div>
+                    Just as stars find their way to form constellations, we found our way to each other. Our story might seem like it was arranged by families, but we feel it was truly arranged by the cosmos.<br><br>
+                    We would be honored if you would join us to celebrate our union. Your presence is the most precious gift we could ask for.
+                    <div class="letter-signature">With love,<br>Ansar & Hussaina</div>
                 </div>
+                <div class="envelope-back"></div>
+                <div class="envelope-flap"></div>
             </div>
         </div>
     </div>
     
-    <div class="floating-action-bar">
-        <button class="fab-button" id="musicControl"><i class="fas fa-volume-xmark" id="musicIcon"></i></button>
-        <button class="fab-button" id="fireworksBtn"><i class="fas fa-firework"></i></button>
-        <button class="fab-button" id="stardustToggleBtn"><i class="fas fa-sparkles"></i></button>
-    </div>
-
-    <audio id="bgMusic" loop><source src="https://assets.mixkit.co/music/preview/mixkit-a-very-happy-christmas-897.mp3" type="audio/mpeg"></audio>
+    <div class="floating-action-bar"><button class="fab-button" id="musicControl"><i class="fas fa-volume-xmark" id="musicIcon"></i></button></div>
+    <audio id="bgMusic" loop><source src="/music.mp3" type="audio/mpeg"></audio>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const canvas = document.getElementById('cosmic-canvas');
         const ctx = canvas.getContext('2d');
-        let particles = [];
-        let animationFrameId;
-        let isHyperdrive = false;
-
-        const PARTICLE_COUNT = window.innerWidth < 768 ? 80 : 150;
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+        let particles = []; let nebulaClouds = []; let animationFrameId;
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
 
         class Particle {
-            constructor(x, y, isWishStar = false, wishData = {}) {
-                this.x = x || Math.random() * canvas.width;
-                this.y = y || Math.random() * canvas.height;
-                this.z = Math.random() * canvas.width;
-                this.size = isWishStar ? Math.random() * 2.5 + 2 : 1.5;
-                this.speedX = 0;
-                this.speedY = 0;
-                this.opacity = isWishStar ? 0 : 0.1;
-                this.maxOpacity = isWishStar ? 1.0 : Math.random() * 0.5 + 0.2;
-                this.isWishStar = isWishStar;
-                this.wishData = wishData;
-                if (isWishStar) this.life = 0;
-            }
-
-            update() {
-                if (isHyperdrive) {
-                    this.z -= 20;
-                } else {
-                    this.z -= 0.5;
-                }
-                
-                if (this.z < 1) {
-                    this.z = canvas.width;
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                }
-
-                if (this.isWishStar && this.life < 120) {
-                    this.opacity = Math.sin(this.life * 0.05) * this.maxOpacity;
-                    this.life++;
-                } else if (!this.isWishStar && this.opacity < this.maxOpacity) {
-                     this.opacity += 0.01;
-                }
-            }
-
-            draw() {
-                const k = 128 / this.z;
-                const px = this.x * k + canvas.width / 2;
-                const py = this.y * k + canvas.height / 2;
-                if (px < 0 || px > canvas.width || py < 0 || py > canvas.height) return;
-
-                const size = this.size * k;
-                ctx.beginPath();
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                ctx.arc(px, py, size, 0, Math.PI * 2);
-                ctx.fill();
-            }
+            constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.size = Math.random() * 1.5 + 0.5; this.speedY = (Math.random() * 0.5) + 0.1; this.opacity = Math.random() * 0.5 + 0.2; this.layer = Math.floor(Math.random() * 3) + 1; }
+            update() { this.y += this.speedY * (this.layer * 0.5); if (this.y > canvas.height) { this.y = 0 - this.size; this.x = Math.random() * canvas.width; } }
+            draw() { const scrollOffset = window.scrollY * 0.1; const parallaxY = this.y - (scrollOffset * this.layer); ctx.beginPath(); ctx.fillStyle = `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.3})`; ctx.arc(this.x, parallaxY, this.size, 0, Math.PI * 2); ctx.fill(); }
+        }
+        class NebulaCloud {
+            constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.radius = Math.random() * 200 + 150; this.speedX = (Math.random() - 0.5) * 0.1; this.color = ['rgba(107, 46, 140, 0.15)', 'rgba(217, 70, 239, 0.1)', 'rgba(74, 144, 226, 0.1)'][Math.floor(Math.random()*3)]; }
+            update() { this.x += this.speedX; if(this.x > canvas.width + this.radius) this.x = -this.radius; if(this.x < -this.radius) this.x = canvas.width + this.radius; }
+            draw() { const scrollOffset = window.scrollY * 0.05; const gradient = ctx.createRadialGradient(this.x, this.y - scrollOffset, 0, this.x, this.y - scrollOffset, this.radius); gradient.addColorStop(0, this.color); gradient.addColorStop(1, 'transparent'); ctx.fillStyle = gradient; ctx.beginPath(); ctx.arc(this.x, this.y - scrollOffset, this.radius, 0, Math.PI * 2); ctx.fill(); }
         }
 
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < PARTICLE_COUNT; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function animate() {
-            ctx.fillStyle = 'rgba(10, 1, 24, 0.4)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            animationFrameId = requestAnimationFrame(animate);
-        }
-
-        // --- INTERACTIVITY & ANIMATIONS ---
-
-        // WOW: Intro Hyperdrive Animation
-        const enterBtn = document.getElementById('enterBtn');
-        enterBtn.addEventListener('click', () => {
-            isHyperdrive = true;
-            document.body.classList.add('hyperdrive');
-            setTimeout(() => {
-                isHyperdrive = false;
-                document.body.classList.add('hyperdrive-engaged');
-                document.getElementById('intro-overlay').style.display = 'none';
-            }, 2500);
-        }, { once: true });
-
-
-        // Floating Moon & Letter
-        const moonBody = document.getElementById('moon-body');
-        const letterModal = document.getElementById('letter-modal');
-        moonBody.addEventListener('click', () => letterModal.classList.add('active'));
-        letterModal.addEventListener('click', () => letterModal.classList.remove('active'));
-
-        // Music & FAB
-        const bgMusic = document.getElementById('bgMusic');
-        const musicControl = document.getElementById('musicControl');
-        const musicIcon = document.getElementById('musicIcon');
-        musicControl.addEventListener('click', () => {
-            if (bgMusic.paused) {
-                bgMusic.play().catch(e => console.log('Audio needs user interaction.'));
-                musicIcon.classList.replace('fa-volume-xmark', 'fa-volume-high');
-                musicControl.classList.add('active');
-            } else {
-                bgMusic.pause();
-                musicIcon.classList.replace('fa-volume-high', 'fa-volume-xmark');
-                musicControl.classList.remove('active');
-            }
-        });
+        function initCosmos() { particles = []; nebulaClouds = []; const particleCount = window.innerWidth < 768 ? 40 : 80; for (let i = 0; i < particleCount; i++) particles.push(new Particle()); for (let i = 0; i < 5; i++) nebulaClouds.push(new NebulaCloud()); }
+        function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); nebulaClouds.forEach(c => { c.update(); c.draw(); }); particles.forEach(p => { p.update(); p.draw(); }); animationFrameId = requestAnimationFrame(animate); }
+        initCosmos(); resizeCanvas(); animate();
+        window.addEventListener('resize', () => { cancelAnimationFrame(animationFrameId); resizeCanvas(); initCosmos(); animate(); });
         
-        // Countdown
+        document.getElementById('enterBtn').addEventListener('click', () => { document.body.classList.add('hyperdrive'); setTimeout(() => { document.body.classList.add('hyperdrive-engaged'); document.getElementById('intro-overlay').style.display = 'none'; }, 2500); }, { once: true });
+
+        document.getElementById('floating-star-letter').addEventListener('click', () => document.getElementById('letter-modal').classList.add('active'));
+        document.getElementById('letter-modal').addEventListener('click', () => document.getElementById('letter-modal').classList.remove('active'));
+
+        const bgMusic = document.getElementById('bgMusic'); const musicControl = document.getElementById('musicControl'); const musicIcon = document.getElementById('musicIcon');
+        musicControl.addEventListener('click', () => { if (bgMusic.paused) { bgMusic.play().catch(e => {}); musicIcon.classList.replace('fa-volume-xmark', 'fa-volume-high'); musicControl.classList.add('active'); } else { bgMusic.pause(); musicIcon.classList.replace('fa-volume-high', 'fa-volume-xmark'); musicControl.classList.remove('active'); } });
+        
         const weddingDate = new Date('2025-12-27T11:00:00').getTime();
-        const countdownInterval = setInterval(() => {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
-            if (distance < 0) {
-                document.querySelector('.countdown-container').innerHTML = '<h3 style="grid-column: 1/-1; color: var(--color-cosmic-gold); text-align: center;">The Celebration Has Begun! 🎉</h3>';
-                clearInterval(countdownInterval); return;
-            }
-            const d = Math.floor(distance/(1000*60*60*24)), h = Math.floor((distance%(1000*60*60*24))/(1000*60*60)), m = Math.floor((distance%(1000*60*60))/(1000*60)), s = Math.floor((distance%(1000*60))/1000);
-            document.getElementById('days').textContent = String(d).padStart(2,'0');
-            document.getElementById('hours').textContent = String(h).padStart(2,'0');
-            document.getElementById('minutes').textContent = String(m).padStart(2,'0');
-            document.getElementById('seconds').textContent = String(s).padStart(2,'0');
-        }, 1000);
+        setInterval(() => { const now = new Date().getTime(); const d = weddingDate - now; if (d < 0) return; document.getElementById('days').textContent = String(Math.floor(d/(1000*60*60*24))).padStart(2,'0'); document.getElementById('hours').textContent = String(Math.floor((d%(1000*60*60*24))/(1000*60*60))).padStart(2,'0'); document.getElementById('minutes').textContent = String(Math.floor((d%(1000*60*60))/(1000*60))).padStart(2,'0'); document.getElementById('seconds').textContent = String(Math.floor((d%(1000*60))/1000)).padStart(2,'0'); }, 1000);
 
-        // Calendar
-        document.getElementById('addCalendarBtn').addEventListener('click', () => {
-            const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:20251227T053000Z\nDTEND:20251227T103000Z\nSUMMARY:Ansar & Hussaina's Wedding\nLOCATION:R.A.R Mahal, Tiruchirappalli, Tamil Nadu\nEND:VEVENT\nEND:VCALENDAR`;
-            const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = 'Ansar_Hussaina_Wedding.ics';
-            link.click();
-        });
-
-        // Wish Wall
-        document.getElementById('submitWishBtn').addEventListener('click', () => {
-            const name = document.getElementById('wishInput').value.trim();
-            const message = document.getElementById('wishMessage').value.trim();
-            if (!name || !message) return;
-            particles.push(new Particle(null, null, true, {name, message}));
-            document.getElementById('wishInput').value = '';
-            document.getElementById('wishMessage').value = '';
-        });
+        document.getElementById('addCalendarBtn').addEventListener('click', () => { const blob = new Blob([`BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:20251227T053000Z\nDTEND:20251227T103000Z\nSUMMARY:Ansar & Hussaina's Wedding\nLOCATION:R.A.R Mahal, Tiruchirappalli\nEND:VEVENT\nEND:VCALENDAR`], { type: 'text/calendar;charset=utf-8' }); const link = document.createElement('a'); link.href = window.URL.createObjectURL(blob); link.download = 'Ansar_Hussaina_Wedding.ics'; link.click(); });
         
-        // --- PARTICLE EFFECTS & EASTER EGGS ---
-        
-        // General particle creation function
-        function createParticles(x, y, count, options) {
-            for (let i = 0; i < count; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                const size = Math.random() * (options.maxSize || 5) + (options.minSize || 2);
-                p.style.width = `${size}px`;
-                p.style.height = `${size}px`;
-                p.style.background = options.color || `hsl(${Math.random() * 60 + 30}, 100%, 75%)`;
-                p.style.left = `${x}px`;
-                p.style.top = `${y}px`;
-                document.body.appendChild(p);
-                
-                const angle = Math.random() * 360;
-                const distance = Math.random() * (options.distance || 100) + 20;
-                const duration = Math.random() * 500 + 500;
-                
-                p.animate([
-                    { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-                    { transform: `translate(-50%, -50%) translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`, opacity: 0 }
-                ], { duration, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' })
-                .onfinish = () => p.remove();
-            }
-        }
-        
-        // Fireworks
-        document.getElementById('fireworksBtn').addEventListener('click', (e) => {
-            e.currentTarget.classList.toggle('active');
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * window.innerHeight * 0.5;
-            const hue = Math.random() * 360;
-            createParticles(x, y, 50, { color: `hsl(${hue}, 100%, 70%)`, distance: 150 });
-        });
-        
-        // Stardust Fall
-        let stardustInterval;
-        document.getElementById('stardustToggleBtn').addEventListener('click', (e) => {
-            e.currentTarget.classList.toggle('active');
-            if (stardustInterval) {
-                clearInterval(stardustInterval);
-                stardustInterval = null;
-            } else {
-                stardustInterval = setInterval(() => {
-                    const x = Math.random() * window.innerWidth;
-                    createParticles(x, -10, 1, { color: 'white', distance: 10, maxSize: 3 });
-                }, 200);
-            }
-        });
-        
-        // Double tap for hearts
-        let lastTap = 0;
-        document.addEventListener('touchend', (e) => {
-            const currentTime = new Date().getTime();
-            if (currentTime - lastTap < 300) {
-                createParticles(e.changedTouches[0].clientX, e.changedTouches[0].clientY, 20, { color: 'hotpink', distance: 120, minSize: 5, maxSize: 15 });
-            }
-            lastTap = currentTime;
-        });
-
-        // Long press hero title
-        let pressTimer;
-        const heroTitle = document.getElementById('heroTitle');
-        heroTitle.addEventListener('touchstart', () => {
-            pressTimer = setTimeout(() => {
-                 createParticles(window.innerWidth/2, window.innerHeight/2, 100, { color: '#FF69B4', distance: 300, minSize: 5, maxSize: 20 });
-            }, 1000);
-        });
-        heroTitle.addEventListener('touchend', () => clearTimeout(pressTimer));
-
-
-        // Scroll animations for timeline
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateX(0)';
+                    entry.target.style.transform = 'translateY(0)';
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.5 });
-
-        document.querySelectorAll('.timeline-event').forEach(el => {
+        }, { threshold: 0.3 });
+        document.querySelectorAll('.timeline-event, .detail-card, .section-title, .countdown-container').forEach(el => {
             el.style.opacity = '0';
-            el.style.transform = 'translateX(-50px)';
+            el.style.transform = 'translateY(30px)';
             el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
             observer.observe(el);
-        });
-
-        // Initialize
-        resizeCanvas();
-        initParticles();
-        animate();
-        window.addEventListener('resize', () => {
-            cancelAnimationFrame(animationFrameId);
-            resizeCanvas();
-            initParticles();
-            animate();
         });
     });
     </script>
 </body>
 </html>
-
